@@ -19,7 +19,7 @@ model = keras.Sequential([
 rmsprop = keras.optimizers.RMSprop(learning_rate=1e-4)
 
 model.compile(optimizer=rmsprop, loss='binary_crossentropy',metrics=['accuracy'])
-chekcb = keras.callbacks.ModelCheckpoint('bestlstm.model.x', save_best_only=True)
+chekcb = keras.callbacks.ModelCheckpoint('bestlstm.model.h5', save_best_only=True)
 earlycb = keras.callbacks.EarlyStopping(patience=3, restore_best_weights=True)
 
 history = model.fit(train_seq, train_target, epochs=100, batch_size=64,validation_data=(val_seq, val_target), callbacks=[chekcb,earlycb])
@@ -58,5 +58,5 @@ earlycb = keras.callbacks.EarlyStopping(patience=3, restore_best_weights=True)
 history = model4.fit(train_seq, train_target, epochs=10, batch_size=64, validation_data=(val_seq, val_target),callbacks=[chekcb, earlycb])
 
 test_seq = seq.pad_sequences(test_input, maxlen=100)
-model4 = keras.models.load_model('/aistudy/2nn.x')
+model4 = keras.models.load_model('best2rnn.model.h5')
 model4.evaluate(test_seq, test_target)
